@@ -136,7 +136,8 @@ function getEvents(time, datasent, callback) {
                     time = convertTo24Hour(data.find('.calendar__time').text());
                 }
 
-                var currency = data.find('.calendar__currency').text();
+                var currency = data.find('.calendar__currency').text().replace('\n','').replace('\n','');
+                var impact = data.find('.calendar__impact-icon--screen').children().attr('class');
                 var title = trim_space(data.find('.calendar__event').text());
                 var actual = data.find('.calendar__actual').text();
                 var forecast = data.find('.calendar__forecast').text();
@@ -145,7 +146,7 @@ function getEvents(time, datasent, callback) {
 
 		if (process.argv[4] === undefined) {
 		    if (currency.length > 2) {
-                    	insert = "INSERT INTO calendar (\"date\",\"time\",\"symbol\",\"title\",\"actual\",\"forecast\",\"previous\") VALUES (\"" + calendar_date + "\", \"" + calendar_time + "\", \"" + currency + "\", \"" + title + "\", \"" + actual + "\", \"" + forecast + "\", \"" + previous + "\" )\n";
+                    	insert = "INSERT INTO calendar (\"date\",\"time\",\"symbol\",\"impact\",\"title\",\"actual\",\"forecast\",\"previous\") VALUES (\"" + calendar_date + "\", \"" + calendar_time + "\", \"" + currency + "\", \"" + impact + "\", \"" + title + "\", \"" + actual + "\", \"" + forecast + "\", \"" + previous + "\" )\n";
                    	saveLog(insert);
 		   }	
 		}else{
@@ -153,6 +154,7 @@ function getEvents(time, datasent, callback) {
                        date: calendar_date,
                        time: calendar_time,
                        symbol: currency,
+                       impact: impact,
                        title: title,
                        actual: actual,
                        forecast: forecast,
